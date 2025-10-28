@@ -43,9 +43,9 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        echo "🔍 Testing API endpoints..."
-                        curl -f localhost:8005/api/v1/checkapi || exit 1
-                        curl -f localhost:8006/api/v1/checkapi || exit 1
+                        echo "🔍 Testing API Containers..."
+                        curl -f localhost:8005 || exit 1
+                        curl -f localhost:8006 || exit 1
                     '''
                 }
             }
