@@ -98,7 +98,7 @@ pipeline {
                         rm -rf .kube && mkdir .kube
                         cat $KUBECONFIG > .kube/config
 
-                        cp my-movie-app/values.yaml values.yml
+                        cp my_movie_app/values.yaml values.yml
                         sed -i "s|tag:.*|tag: \\"${DOCKER_TAG}\\"|g" values.yml
 
                         helm upgrade --install movieapp my_movie_app --values=values.yml --namespace staging --create-namespace
