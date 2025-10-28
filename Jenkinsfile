@@ -48,8 +48,10 @@ pipeline {
                 script {
                     sh '''
                         echo " Testing API Containers..."
-                        curl -f localhost:8005 
-                        curl -f localhost:8006# Wait until service is up (max 30s)
+                        docker exec ci-movie-api curl -f http://localhost:8000
+                        docker exec ci-cast-api curl -f http://localhost:8000
+                        #curl -f localhost:8005 
+                        #curl -f localhost:8006# Wait until service is up (max 30s)
                         #echo "⏳ Waiting for movie-api..."
                         #until curl -s http://localhost:8005 > /dev/null; do
                         #    sleep 2
