@@ -31,8 +31,12 @@ pipeline {
                 script {
                     sh '''
                         echo "🚀 Running containers for smoke test..."
-                        docker run -d -p 8005:8000 --name ci-movie-api $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG
-                        docker run -d -p 8006:8000 --name ci-cast-api $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG
+                        docker run -d -p 8005:8000 \
+                          -e DATABASE_URI=postgresql://movie_db_username:movie_db_password@localhost/movie_db_dev \
+                          --name ci-movie-api $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG
+                        docker run -d -p 8006:8000 \
+                          -e DATABASE_URI=postgresql://cast_db_username:cast_db_password@localhost/cast_db_dev \
+                          --name ci-cast-api $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG
                         sleep 10
                     '''
                 }
@@ -44,17 +48,17 @@ pipeline {
                 script {
                     sh '''
                         echo " Testing API Containers..."
-                        #curl -f localhost:8005 
-                        #curl -f localhost:8006# Wait until service is up (max 30s)
-                        echo "⏳ Waiting for movie-api..."
-                        until curl -s http://localhost:8005 > /dev/null; do
-                            sleep 2
-                        done
+                        curl -f localhost:8005 
+                        curl -f localhost:8006# Wait until service is up (max 30s)
+                        #echo "⏳ Waiting for movie-api..."
+                        #until curl -s http://localhost:8005 > /dev/null; do
+                        #    sleep 2
+                        #done
 
-                        echo "⏳ Waiting for cast-api..."
-                        until curl -s http://localhost:8006 > /dev/null; do
-                            sleep 2
-                        done
+                        #echo "⏳ Waiting for cast-api..."
+                        #until curl -s http://localhost:8006 > /dev/null; do
+                        #    sleep 2
+                        #done
 
                         echo "✅ Both APIs are up!"
                     '''
