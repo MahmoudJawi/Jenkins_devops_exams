@@ -1,0 +1,28 @@
+{{- range .Values.apps }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .name }}-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .name }}-service
+  template:
+    metadata:
+      labels:
+        app: {{ .name }}-service
+    spec:
+      containers:
+        - name: {{ .name }}-service
+          image: {{ .image }}
+          ports:
+            - containerPort: {{ .containerPort }}
+          command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "{{ .containerPort }}"]
+          env:
+          {{- range $key, $value := .env }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+          {{- end }}
+---
+{{- end }}

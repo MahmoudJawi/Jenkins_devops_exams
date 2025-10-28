@@ -1,0 +1,9 @@
+apiVersion: v2
+name: my_movie_app
+description: A Helm chart for movie and cast microservices whit databases and nginx
+
+type: application
+
+version: 0.1.0
+
+appVersion: "1.0.0"
