@@ -44,8 +44,8 @@ pipeline {
                 script {
                     sh '''
                         echo "🔍 Testing API Containers..."
-                        // curl -f localhost:8005 
-                        // curl -f localhost:8006
+                        # curl -f localhost:8005 
+                        # curl -f localhost:8006
                     '''
                 }
             }
