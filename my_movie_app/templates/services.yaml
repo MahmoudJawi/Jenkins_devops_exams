@@ -10,7 +10,7 @@ spec:
     - protocol: TCP
       port: {{ .containerPort }}
       targetPort: {{ .containerPort }}
-      nodePort: {{ .nodePort }}
+      #nodePort: {{ .nodePort }}
   type: NodePort
 ---
 {{- end }}

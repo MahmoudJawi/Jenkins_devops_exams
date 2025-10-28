@@ -2,14 +2,14 @@ apps:
   - name: movie
     image: jawi95/movieapi:latest
     containerPort: 8000
-    nodePort: 30081
+    #nodePort: 30081
     env:
       DATABASE_URI: postgresql://movie_db_username:movie_db_password@movie-db/movie_db_dev
       CAST_SERVICE_HOST_URL: http://cast-service:8000/api/v1/casts/
   - name: cast
     image: jawi95/castapi:latest
     containerPort: 8000
-    nodePort: 30082
+    #nodePort: 30082
     env:
       DATABASE_URI: postgresql://cast_db_username:cast_db_password@cast-db/cast_db_dev
 
@@ -26,5 +26,5 @@ databases:
 nginx:
   image: nginx:latest
   port: 8080
-  nodePort: 30083
+  #nodePort: 30083
   domain: my-vm.abrdns.com

@@ -56,5 +56,5 @@ spec:
     - protocol: TCP
       port: {{ .Values.nginx.port }}
       targetPort: {{ .Values.nginx.port }}
-      nodePort: {{ .Values.nginx.nodePort }}
+      #nodePort: {{ .Values.nginx.nodePort }}
   type: NodePort
