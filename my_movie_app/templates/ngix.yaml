@@ -10,10 +10,12 @@ data:
 
       location /api/v1/movies {
         proxy_pass http://movie-service:8000/api/v1/movies;
+        proxy_redirect http://movie-service:8000/ /;
       }
 
       location /api/v1/casts {
         proxy_pass http://cast-service:8000/api/v1/casts;
+        proxy_redirect http://cast-service:8000/ /;
       }
     }
 ---

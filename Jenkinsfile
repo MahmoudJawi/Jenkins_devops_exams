@@ -82,6 +82,31 @@ pipeline {
                         sed -i "s|tag:.*|tag: \\"${DOCKER_TAG}\\"|g" values.yml
 
                         helm upgrade --install movieapp my_movie_app --values=values.yml --namespace dev --create-namespace
+
+                        echo "🌍 Nginx NodePort:"
+                        kubectl get svc nginx -n dev -o jsonpath='{.spec.ports[0].nodePort}'; echo
+                    '''
+                }
+            }
+        }
+        stage('Deploy to Qa') {
+            environment {
+                KUBECONFIG = credentials('config')
+            }
+            steps {
+                script {
+                    sh '''
+                        echo " Deploying to Qa environment..."
+                        rm -rf .kube && mkdir .kube
+                        cat $KUBECONFIG > .kube/config
+
+                        cp my_movie_app/values.yaml values.yml
+                        sed -i "s|tag:.*|tag: \\"${DOCKER_TAG}\\"|g" values.yml
+
+                        helm upgrade --install movieapp my_movie_app --values=values.yml --namespace qa --create-namespace
+
+                        echo "🌍 Nginx NodePort:"
+                        kubectl get svc nginx -n qa -o jsonpath='{.spec.ports[0].nodePort}'; echo
                     '''
                 }
             }
@@ -102,6 +127,9 @@ pipeline {
                         sed -i "s|tag:.*|tag: \\"${DOCKER_TAG}\\"|g" values.yml
 
                         helm upgrade --install movieapp my_movie_app --values=values.yml --namespace staging --create-namespace
+                        
+                        echo "🌍 Nginx NodePort:"
+                        kubectl get svc nginx -n staging -o jsonpath='{.spec.ports[0].nodePort}'; echo
                     '''
                 }
             }
@@ -125,6 +153,9 @@ pipeline {
                         sed -i "s|tag:.*|tag: \\"${DOCKER_TAG}\\"|g" values.yml
 
                         helm upgrade --install movieapp my_movie_app --values=values.yml --namespace prod --create-namespace
+                        
+                        echo "🌍 Nginx NodePort:"
+                        kubectl get svc nginx -n dev -o jsonpath='{.spec.ports[0].nodePort}'; echo                
                     '''
                 }
             }
