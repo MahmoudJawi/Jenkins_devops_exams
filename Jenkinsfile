@@ -155,7 +155,7 @@ pipeline {
                         helm upgrade --install movieapp my_movie_app --values=values.yml --namespace prod --create-namespace
                         
                         echo "🌍 Nginx NodePort:"
-                        kubectl get svc nginx -n dev -o jsonpath='{.spec.ports[0].nodePort}'; echo                
+                        kubectl get svc nginx -n prod -o jsonpath='{.spec.ports[0].nodePort}'; echo                
                     '''
                 }
             }
