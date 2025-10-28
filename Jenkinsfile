@@ -43,7 +43,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        echo "🔍 Testing API Containers..."
+                        echo " Testing API Containers..."
                         # curl -f localhost:8005 
                         # curl -f localhost:8006
                     '''
